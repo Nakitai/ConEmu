@@ -1,90 +1,24 @@
-## About ConEmu
+# ConEmu-Pcmd
+#  前言
+ >本人是 `PentestBox` 的忠实用户，使用了也有3年多了吧，毋庸置疑 `PentestBox` 是强大，的但是原作者已经不更新了，很多工具都没用也很老了，也太臃肿了，而且他也是用的`ConEmu`封装, 所以我想用`ConEmu`自己做一个，于是就通过`ConEmu` 二次编译成 `Pcmd`, 目前还有很多环境没有加入，`java python go git` 这些，后期慢慢加入。
 
-[![master build status](https://dev.azure.com/MaksimMoisiuk/conemu/_apis/build/status/Maximus5.ConEmu?branchName=master&label=master)](https://dev.azure.com/MaksimMoisiuk/conemu/_build/latest?definitionId=1&branchName=master&label=master)
-[![daily build status](https://dev.azure.com/MaksimMoisiuk/conemu/_apis/build/status/Maximus5.ConEmu?branchName=daily&label=daily)](https://dev.azure.com/MaksimMoisiuk/conemu/_build/latest?definitionId=1&branchName=daily&label=daily)
+#  使用
+- 运行 `Pcmd.exe` 或 `Pcmd64.exe`, 基础操作命令同 `cmd` 相同，部分 `Linux` 命令如 `ls` 等。
+- `ctrl + t` 新建一个窗口。
+- `ctrl + w` 关闭当前窗口。
+- `ctrl + tab` 或 `ctrl + 数字` 切换窗口。
 
-[ConEmu-Maximus5](https://conemu.github.io) is a Windows console emulator with tabs, which represents
-multiple consoles as one customizable GUI window with various features.
-
-Initially, the program was created as a companion to
-[Far Manager](http://en.wikipedia.org/wiki/FAR_Manager),
-my favorite shell replacement - file and archive management,
-command history and completion, powerful editor.
-
-Today, ConEmu can be used with any other console application or simple GUI tools
-(like PuTTY for example). ConEmu is an active project, open to
-[suggestions](https://github.com/Maximus5/ConEmu/issues).
-
-<a href="https://www.fosshub.com/ConEmu.html">![Fosshub.com ConEmu mirror](https://github.com/Maximus5/ConEmu/wiki/downloads-new.png)</a>
-<a href="https://conemu.github.io/donate.html">![Donate](https://github.com/Maximus5/ConEmu/wiki/donate-new.png)</a>
-
-Take a look at [screencast](http://dotnetsurfers.com/blog/2013/12/15/developer-tools-screencast-7-conemu/) about ConEmu.
-
-This fork grew up from ConEmu by Zoin.
+#  添加工具
+> 和 `Pentestbox` 一样我们可以添加一些自定义的工具。例：我们这里添加一个工具 `geek.exe` 一个轻量级卸载工具。
+1. 在 `tools` 目录创建 `geek` 文件夹并把 `geek.exe` 复制到其中。
+2. 打开 `config` 目录下 `doskey.config` 文件，此文件就是 `Clink` 注入的别名文件。
+```config
+geek = "%tools%/geek/geek.exe" $T
+```
+3. 这里 `=号` 前面 `geek` 是终端的运行命令，`=号` 后面是程序的路径 `%tools%` 就是 `tools` 目录路径。
+4. 我们终端运行 `geek`，注：如果没有生效请 `ctrl + t` 新建一个窗口在运行。
 
 
-## License (BSD 3-clause)
-    THIS SOFTWARE IS PROVIDED BY THE AUTHOR ''AS IS'' AND ANY EXPRESS OR
-    IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
-    OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-
-See [Release/ConEmu/License.txt](https://github.com/Maximus5/ConEmu/blob/master/Release/ConEmu/License.txt) for the full license text.
-
-
-## Some links
-Wiki: https://conemu.github.io/en/TableOfContents.html
-What's new: https://conemu.github.io/en/Whats_New.html
-Release stages: https://conemu.github.io/en/StableVsPreview.html
-Donate this project: <a ref="https://conemu.github.io/donate.html" rel="nofollow">https://conemu.github.io/donate.html</a>
-
-
-
-## Description
-ConEmu starts a console program in hidden console window and provides
-an alternative customizable GUI window with various features:
-
-  * smooth window resizing;
-  * tabs and splits (panes);
-  * easy run old DOS applications (games) in Windows 7 or 64bit OS (DosBox required);
-  * quake-style, normal, maximized and full screen window graphic modes;
-  * window font anti-aliasing: standard, clear type, disabled;
-  * window fonts: family, height, width, bold, italic, etc.;
-  * using normal/bold/italic fonts for different parts of console simultaneously;
-  * cursor: standard console (horizontal) or GUI (vertical);
-  * and more, and more...
-
-### Far Manager related features
-  * tabs for editors, viewers, panels and consoles;
-  * thumbnails and tiles;
-  * show full output (1K+ lines) of last command in editor/viewer;
-  * customizable right click behaviour (long click opens context menu);
-  * drag and drop (explorer style);
-  * and more, and more...
-
-All settings are read from the registry or ConEmu.xml file, after which the
-[command line parameters](https://conemu.github.io/en/CommandLine.html)
-are applied. You may easily use several named configurations (for different PCs for example).
-
-
-## Requirements
-  * Windows XP or later for 32-bit.
-  * Windows Vista or later for 64-bit.
-
-
-## Installation
-In general, ConEmu installation is easy.
-Just unpack or install to any folder and run `ConEmu.exe`.
-
-Read [Installation wiki](https://conemu.github.io/en/Installation.html)
-about release stages, distro packets, some warnings and much more...
-
-
-## Building from sources
+## 构建请看这里
 https://github.com/Maximus5/ConEmu/blob/master/src/HowToBuild.md
 
-## Screenshots
-![Splits and tabs in ConEmu](https://github.com/Maximus5/ConEmu/wiki/ConEmuSplits.png)
-
-![ConEmu+Powershell inside Windows Explorer pane](https://github.com/Maximus5/ConEmu/wiki/ConEmuInside.png)
-
-[More screenshots](https://conemu.github.io/en/Screenshots.html)

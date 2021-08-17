@@ -1,0 +1,12 @@
+*.log
+*.bat
+*.o
+*.d
+*.exe
+*.ion
+*.jmp
+FarMenu.ini
+/tests
+/v*.*/
+set_vars_user.cmd
+ConEmuT.c

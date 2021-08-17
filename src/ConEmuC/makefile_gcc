@@ -1,0 +1,40 @@
+######################################################
+# to build correct bitness user have to specify DIRBIT
+#   make -f makefile_gcc DIRBIT=32
+# or
+#   make -f makefile_gcc DIRBIT=64
+# default is 32 bit make
+#
+# define USERCPPFLAGS to pass them to compiler, example below
+#   mingw32-make -f makefile_gcc USERCPPFLAGS=-fpermissive
+######################################################
+
+NAME = ConEmuC
+EXT = exe
+RELEASESUBDIR = /ConEmu
+DEF = ConEmuC.def
+USERCPP = -D CONEMU_MINIMAL
+LNKPLATFORM = -mconsole
+BASEADDRESS =
+
+include ../makefile_gcc_inc
+
+USERLIBS += -lshlwapi -lgdi32 -lshell32
+
+SRCS = \
+		../common/CEStr.cpp         \
+		../common/CmdLine.cpp        \
+		../common/EnvVar.cpp         \
+		../common/HkFunc.cpp         \
+		../common/MAssert.cpp        \
+		../common/Memory.cpp         \
+		../common/MModule.cpp        \
+		../common/MSectionSimple.cpp \
+		../common/MStrDup.cpp        \
+		../common/MStrSafe.cpp       \
+		../common/WObjects.cpp       \
+		../common/WThreads.cpp       \
+		ConEmuC.cpp                  \
+		Downloader.cpp
+
+include ../makefile_gcc_target

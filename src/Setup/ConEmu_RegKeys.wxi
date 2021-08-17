@@ -1,0 +1,16 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Include>
+
+    <Property Id="APPLICATIONFOLDER">
+      <RegistrySearch Id="CEInstallDir" Root="HKLM" Key="$(var.RegKey)" Name="$(var.CEInstallDir)" Type="directory" Win64="$(var.Win64)" />
+    </Property>
+
+    <!--<Property Id="EXTCONSOLEFOLDER">
+      <RegistrySearch Id="CEExtConsoleDir" Root="HKLM" Key="$(var.RegKey)" Name="$(var.CEExtConsoleDir)" Type="directory" Win64="$(var.Win64)" />
+    </Property>-->
+
+    <Property Id="APPLICATIONFOLDEROLD">
+      <RegistrySearch Id="CEInstallDirOld" Root="HKLM" Key="$(var.RegKeyOld)" Name="$(var.CEInstallDir)" Type="directory" Win64="$(var.Win64)" />
+    </Property>
+
+</Include>

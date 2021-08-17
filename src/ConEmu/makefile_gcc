@@ -1,0 +1,209 @@
+######################################################
+# to build correct bitness user have to specify DIRBIT
+#   make -f makefile_gcc DIRBIT=32
+# or
+#   make -f makefile_gcc DIRBIT=64
+# default is 32 bit make
+#
+# define USERCPPFLAGS to pass them to compiler, example below
+#   mingw32-make -f makefile_gcc USERCPPFLAGS=-fpermissive
+######################################################
+
+NAME = ConEmu
+EXT = exe
+RELEASESUBDIR =
+DEF =
+USERCPP =
+LNKPLATFORM = -mwindows
+BASEADDRESS =
+RES_NAME2 = ConEmuMinGW
+
+include ../makefile_gcc_inc
+
+USERLIBS += -lversion -lshlwapi -loleaut32 -lnetapi32 -lwinmm
+USERLIBS += -ladvapi32 -lshell32 -lgdi32 -lcomdlg32 -lole32 -luuid -lcomctl32 mstask.lib
+
+SRCS = \
+		../common/CEStr.cpp          \
+		../common/CEHandle.cpp       \
+		../common/CmdLine.cpp        \
+		../common/Common.cpp         \
+		../common/ConEmuCheck.cpp    \
+		../common/ConsoleMixAttr.cpp \
+		../common/EnvVar.cpp         \
+		../common/execute.cpp        \
+		../common/HkFunc.cpp         \
+		../common/Keyboard.cpp       \
+		../common/MAssert.cpp        \
+		../common/MBSTR.cpp          \
+		../common/md5.cpp            \
+		../common/Memory.cpp         \
+		../common/MEvent.cpp         \
+		../common/MFileLog.cpp       \
+		../common/MFileLogEx.cpp     \
+		../common/MGlobal.cpp        \
+		../common/MGuiMacro.cpp      \
+		../common/MJsonReader.cpp    \
+		../common/MModule.cpp        \
+		../common/Monitors.cpp       \
+		../common/MProcess.cpp       \
+		../common/MProcessBits.cpp   \
+		../common/MRect.cpp          \
+		../common/MSection.cpp       \
+		../common/MSectionSimple.cpp \
+		../common/MSecurity.cpp      \
+		../common/MSetter.cpp        \
+		../common/MStrDup.cpp        \
+		../common/MStrEsc.cpp        \
+		../common/MStrSafe.cpp       \
+		../common/MTimer.cpp         \
+		../common/MToolTip.cpp       \
+		../common/ProcessSetEnv.cpp  \
+		../common/RConStartArgs.cpp  \
+		../common/RConStartArgsEx.cpp\
+		../common/RgnDetect.cpp      \
+		../common/SetEnvVar.cpp      \
+		../common/wcchars.cpp        \
+		../common/WConsoleInfo.cpp   \
+		../common/wcwidth.cpp        \
+		../common/WFiles.cpp         \
+		../common/WObjects.cpp       \
+		../common/WRegistry.cpp      \
+		../common/WSession.cpp       \
+		../common/WThreads.cpp       \
+		../common/WUser.cpp          \
+		AboutDlg.cpp       \
+		AltNumpad.cpp      \
+		Attach.cpp         \
+		Background.cpp     \
+		BaseDragDrops.cpp  \
+		CmdHistory.cpp     \
+		ColorFix.cpp       \
+		ConEmu.cpp         \
+		ConEmuApp.cpp      \
+		ConEmuCtrl.cpp     \
+		ConEmuPipe.cpp     \
+		ConEmuSize.cpp     \
+		ConEmuStart.cpp    \
+		ConfirmDlg.cpp     \
+		CreateProcess.cpp  \
+		CustomFonts.cpp    \
+		DefaultTerm.cpp    \
+		DlgItemHelper.cpp  \
+		DontEnable.cpp     \
+		DpiAware.cpp       \
+		DragDrop.cpp       \
+		DragDropData.cpp   \
+		DwmHelper.cpp      \
+		DynDialog.cpp      \
+		FindDlg.cpp        \
+		FindPanel.cpp      \
+		Font.cpp           \
+		FontMgr.cpp        \
+		FontPtr.cpp        \
+		FrameHolder.cpp    \
+		GdiObjects.cpp     \
+		GestureEngine.cpp  \
+		GuiServer.cpp      \
+		helper.cpp         \
+		HooksUnlocker.cpp  \
+		HotkeyChord.cpp    \
+		HotkeyDlg.cpp      \
+		HotkeyList.cpp     \
+		Hotkeys.cpp        \
+		HtmlCopy.cpp       \
+		IconList.cpp       \
+		ImgButton.cpp      \
+		Inside.cpp         \
+		LngData.cpp        \
+		LngRc.cpp          \
+		LoadImg.cpp        \
+		Macro.cpp          \
+		MacroImpl.cpp      \
+		Match.cpp          \
+		Menu.cpp           \
+		MyClipboard.cpp    \
+		OleInitializer.cpp \
+		Options.cpp        \
+		OptionsClass.cpp   \
+		OptionsFast.cpp    \
+		OptionsHelp.cpp    \
+		PushInfo.cpp       \
+		RConData.cpp       \
+		RConFiles.cpp      \
+		RConPalette.cpp    \
+		RealBuffer.cpp     \
+		RealConsole.cpp    \
+		RealServer.cpp     \
+		Recreate.cpp       \
+		RunQueue.cpp       \
+		ScreenDump.cpp     \
+		SearchCtrl.cpp     \
+		SetAppSettings.cpp \
+		SetCmdTask.cpp     \
+		SetColorPalette.cpp\
+		SetDlgButtons.cpp  \
+		SetDlgColors.cpp   \
+		SetDlgFonts.cpp    \
+		SetDlgLists.cpp    \
+		SetPgANSI.cpp      \
+		SetPgAppear.cpp    \
+		SetPgApps.cpp      \
+		SetPgBackgr.cpp    \
+		SetPgBase.cpp      \
+		SetPgChildGui.cpp  \
+		SetPgColors.cpp    \
+		SetPgComspec.cpp   \
+		SetPgConfirm.cpp   \
+		SetPgCursor.cpp    \
+		SetPgDebug.cpp     \
+		SetPgDefTerm.cpp   \
+		SetPgEnvironment.cpp\
+		SetPgFar.cpp       \
+		SetPgFarMacro.cpp  \
+		SetPgFeatures.cpp  \
+		SetPgFonts.cpp     \
+		SetPgGeneral.cpp   \
+		SetPgHilight.cpp   \
+		SetPgInfo.cpp      \
+		SetPgIntegr.cpp    \
+		SetPgKeyboard.cpp  \
+		SetPgKeys.cpp      \
+		SetPgMarkCopy.cpp  \
+		SetPgMouse.cpp     \
+		SetPgPaste.cpp     \
+		SetPgQuake.cpp     \
+		SetPgSizePos.cpp   \
+		SetPgStartup.cpp   \
+		SetPgStatus.cpp    \
+		SetPgTabs.cpp      \
+		SetPgTaskbar.cpp   \
+		SetPgTasks.cpp     \
+		SetPgTransparent.cpp\
+		SetPgUpdate.cpp    \
+		SetPgViews.cpp     \
+		SettingsStorage.cpp     \
+		SizeInfo.cpp       \
+		Status.cpp         \
+		SystemEnvironment.cpp \
+		TabBar.cpp         \
+		TabCtrlBase.cpp    \
+		TabCtrlWin.cpp     \
+		TabID.cpp          \
+		TaskBar.cpp        \
+		TaskBarGhost.cpp   \
+		TaskScheduler.cpp  \
+		TermX.cpp          \
+		ToolImg.cpp        \
+		TrayIcon.cpp       \
+		UnitTests.cpp      \
+		Update.cpp         \
+		UpdateSet.cpp      \
+		VConChild.cpp      \
+		VConGroup.cpp      \
+		VConRelease.cpp    \
+		VConText.cpp       \
+		VirtualConsole.cpp \
+		WinObjBase.cpp
+
+include ../makefile_gcc_target

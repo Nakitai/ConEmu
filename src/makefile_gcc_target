@@ -1,0 +1,106 @@
+######################################################
+# Linker defines to build with GCC
+######################################################
+
+ifeq ($(EXT),dll)
+	LNKFLAGS = -mdll -Xlinker --base-file -Xlinker $(TMPDIR)/$(RELEASENAME).base
+	ifdef BASEADDRESS
+		LNKFLAGS += -Xlinker --image-base -Xlinker $(BASEADDRESS)
+	endif
+else
+	LNKFLAGS =
+endif
+
+LNKFLAGS += -m$(DIRBIT) $(DEBUGLINKFLAGS) $(LNKPLATFORM) $(USERLIBSFIRST) $(USERLIBS)
+#avoid dynamic link to libgcc_s_dw2-1.dll
+LNKFLAGS += -static-libgcc -static-libstdc++ -static -lpthread
+
+ifndef DEBUG
+	LNKFLAGS += -s
+endif
+
+ifeq ($(DIRBIT),32)
+	LNKFLAGS += -Xlinker --large-address-aware
+	WINDRES += -F pe-i386
+else
+	WINDRES += -F pe-x86-64
+endif
+
+RCFLAGS = $(RCWIDE) $(USERRC)
+
+#SRC_LOCAL = $(filter-out ../common/%,$($(filter-out ../ConEmuHk/%,$($(filter-out ../modules/minhook/src/%,$(SRCS))))))
+SRC_LOCAL = $(filter-out ../%,$(SRCS))
+
+OBJS = \
+	$(patsubst ../common/%.cpp,$(OBJCMN)/%.o,$(filter ../common/%.cpp,$(SRCS))) \
+	$(patsubst ../ConEmuHk/%.cpp,$(OBJCHK)/%.o,$(filter ../ConEmuHk/%.cpp,$(SRCS))) \
+	$(patsubst ../modules/minhook/src/%.c,$(OBJMOD)/%.o,$(filter ../modules/minhook/src/%.c,$(SRCS))) \
+	$(patsubst %.cpp,$(OBJDIR)/%.o,$(filter %.cpp,$(SRC_LOCAL))) \
+	$(patsubst %.c,$(OBJDIR)/%.o,$(filter %.c,$(SRC_LOCAL))) \
+	$(RES) $(RES2)
+
+MAP = $(patsubst %.$(EXT),%.map,$(RELEASEFULLNAME))
+
+
+.PHONY: all
+all: build
+
+.PHONY: build
+build: $(RELEASEFULLNAME)
+
+$(OBJDIR)/%.o: %.cpp
+	@echo compiling $<
+	@$(MKDIR) -p $(@D)
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(OBJCMN)/%.o: ../common/%.cpp
+	@echo compiling $<
+	@$(MKDIR) -p $(@D)
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(OBJCHK)/%.o: ../ConEmuHk/%.cpp
+	@echo compiling $<
+	@$(MKDIR) -p $(@D)
+	@$(CXX) $(CXXFLAGS) -c -o $@ $<
+
+$(OBJDIR)/%.o: %.c
+	@echo compiling $<
+	@$(MKDIR) -p $(@D)
+	@$(CC) $(CCFLAGS) -c -o $@ $<
+
+$(OBJMOD)/%.o: ../modules/minhook/src/%.c
+	@echo compiling $<
+	@$(MKDIR) -p $(@D)
+	@$(CC) $(CCFLAGS) -c -o $@ $<
+
+$(RES): $(RC_NAME)
+	@echo compiling resources $<
+	@$(MKDIR) -p $(@D)
+	@$(WINDRES) $(RCFLAGS) -i $< -o $@
+
+$(RES2): $(RES_NAME2).res
+	@echo compiling resources $<
+	@$(MKDIR) -p $(@D)
+	@$(WINDRES) $(RCFLAGS) -i $< -o $@
+
+$(RELEASEFULLNAME): $(OBJS)
+	@echo linking $@
+	@$(MKDIR) -p $(@D)
+ifeq ($(EXT),exe)
+	@$(CXX) -o $(TMPDIR)/$(RELEASENAME) $(OBJS) $(LNKFLAGS) -Xlinker -Map -Xlinker $(MAP)
+else
+	@$(CXX) -mdll -o $(TMPDIR)/$(RELEASENAME) -Xlinker --base-file -Xlinker $(TMPDIR)/$(RELEASENAME).base $(OBJS) $(LNKFLAGS)
+	@$(DLLTOOL) --dllname $(TMPDIR)/$(RELEASENAME) --base-file $(TMPDIR)/$(RELEASENAME).base --output-exp $(TMPDIR)/$(RELEASENAME).exp --def $(DEF)
+	@$(CXX) -mdll -o $(TMPDIR)/$(RELEASENAME) $(OBJS) $(TMPDIR)/$(RELEASENAME).exp $(LNKFLAGS) -Xlinker -Map -Xlinker $(MAP)
+endif
+	@$(MV) $(TMPDIR)/$(RELEASENAME) $(RELEASEFULLNAME)
+
+.PHONY: defines
+defines:
+	@$(CXX) $(CXXFLAGS) -dM -E - < /dev/null
+
+.PHONY: clean
+clean:
+	@echo final cleaning
+	@$(RM) $(OBJS)
+	@$(RMDIR) $(OBJDIR) $(OBJCMN) $(TMPDIR)

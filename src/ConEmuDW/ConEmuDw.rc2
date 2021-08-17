@@ -1,0 +1,25 @@
+
+#include <windows.h>
+
+/////////////////////////////////////////////////////////////////////////////
+// Russian resources
+
+LANGUAGE LANG_RUSSIAN, SUBLANG_DEFAULT
+#pragma code_page(1251)
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+#define CEVER_DESCRIPTION   "ConEmu R/W handler" CONEMUPLTFRM
+#if defined(_WIN64) || defined(WIN64)
+#define CEVER_FILENAME      "ExtendedConsole64.dll"
+#else
+#define CEVER_FILENAME      "ExtendedConsole.dll"
+#endif
+#define CEVER_COMMENTS      "Far truecolor extension for ConEmu"
+#define CEVER_DLL
+#include "../common/version_template.rc2"
+
+/////////////////////////////////////////////////////////////////////////////

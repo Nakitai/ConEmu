@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Include>
+
+    <Custom Action="SetConEmuInstallDirCEOld" After="AppSearch">APPLICATIONFOLDEROLD AND NOT INSTALLPATH AND NOT APPLICATIONFOLDER</Custom>
+
+</Include>

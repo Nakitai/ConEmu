@@ -1,0 +1,6 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Include>
+
+    <CustomAction Id="SetConEmuInstallDirCEOld" Property="APPLICATIONFOLDER" Value="[APPLICATIONFOLDEROLD]" Execute="firstSequence" />
+
+</Include>

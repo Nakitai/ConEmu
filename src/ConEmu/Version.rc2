@@ -1,0 +1,22 @@
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Release MANIFEST
+//
+#if defined(CERC_MANIFEST)
+1 24 DISCARDABLE "conemu.gcc.manifest"
+#endif
+
+/////////////////////////////////////////////////////////////////////////////
+//
+// Version
+//
+
+#define CEVER_DESCRIPTION   "Console Emulator" CONEMUPLTFRM
+#if defined(_WIN64) || defined(WIN64)
+#define CEVER_FILENAME      "ConEmu64.exe"
+#else
+#define CEVER_FILENAME      "ConEmu.exe"
+#endif
+#undef  CEVER_DLL
+#include "../common/version_template.rc2"

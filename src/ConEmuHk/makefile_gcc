@@ -1,0 +1,93 @@
+######################################################
+# to build correct bitness user have to specify DIRBIT
+#   make -f makefile_gcc DIRBIT=32
+# or
+#   make -f makefile_gcc DIRBIT=64
+# default is 32 bit make
+#
+# define USERCPPFLAGS to pass them to compiler, example below
+#   mingw32-make -f makefile_gcc USERCPPFLAGS=-fpermissive
+######################################################
+
+NAME = ConEmuHk
+EXT = dll
+RELEASESUBDIR = /ConEmu
+DEF = export.gcc${DIRBIT}.def
+USERCPP = -D CONEMU_MINIMAL
+LNKPLATFORM = -mwindows
+BASEADDRESS = 0x7E110000
+
+include ../makefile_gcc_inc
+
+USERLIBS += -luuid
+
+FCPPOPT += -fomit-frame-pointer -fstrict-aliasing
+COPTIMIZE =
+
+SRCS = \
+		../common/CEStr.cpp         \
+		../common/CmdLine.cpp        \
+		../common/Common.cpp         \
+		../common/ConEmuCheck.cpp    \
+		../common/ConsoleMixAttr.cpp \
+		../common/ConsoleRead.cpp    \
+		../common/EnvVar.cpp         \
+		../common/execute.cpp        \
+		../common/HandleKeeper.cpp   \
+		../common/HkFunc.cpp         \
+		../common/InQueue.cpp        \
+		../common/Keyboard.cpp       \
+		../common/MAssert.cpp        \
+		../common/MConHandle.cpp     \
+		../common/Memory.cpp         \
+		../common/MFileLog.cpp       \
+		../common/MModule.cpp        \
+		../common/Monitors.cpp       \
+		../common/MProcess.cpp       \
+		../common/MProcessBits.cpp   \
+		../common/MRect.cpp          \
+		../common/MSectionSimple.cpp \
+		../common/MSection.cpp       \
+		../common/MSecurity.cpp      \
+		../common/MStrDup.cpp        \
+		../common/MStrSafe.cpp       \
+		../common/RConStartArgs.cpp  \
+		../common/WCodePage.cpp      \
+		../common/WConsole.cpp       \
+		../common/WFiles.cpp         \
+		../common/WModuleCheck.cpp   \
+		../common/WObjects.cpp       \
+		../common/WThreads.cpp       \
+		../common/WUser.cpp          \
+		../modules/minhook/src/buffer.c     \
+		../modules/minhook/src/hook.c       \
+		../modules/minhook/src/trampoline.c \
+		Ansi.cpp           \
+		ConEmuHooks.cpp    \
+		Connector.cpp      \
+		DefTermHk.cpp      \
+		Entry.cpp          \
+		ExtConsole.cpp     \
+		GuiAttach.cpp      \
+		hde.c              \
+		hkCmdExe.cpp       \
+		hkConsole.cpp      \
+		hkConsoleInput.cpp \
+		hkConsoleOutput.cpp\
+		hkDialog.cpp       \
+		hkEnvironment.cpp  \
+		hkFarExe.cpp       \
+		hkGDI.cpp          \
+		hkKernel.cpp       \
+		hkLibrary.cpp      \
+		hkMessages.cpp     \
+		hkProcess.cpp      \
+		hkStdIO.cpp        \
+		hkWindow.cpp       \
+		hlpConsole.cpp     \
+		Injects.cpp        \
+		MainThread.cpp     \
+		SetHook.cpp        \
+		ShellProcessor.cpp
+
+include ../makefile_gcc_target
